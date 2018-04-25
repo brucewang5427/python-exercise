@@ -1,0 +1,13 @@
+import imapclient,pyzmail
+ima=imapclient.IMAPClient('imap.gmail.com',ssl=True)
+ima.login('cwang5315427@gmail.com','xg5315427')
+ima.select_folder('INBOX',readonly=True)
+uids=ima.search(['FROM noreply@fitbit.com'])
+rawm=ima.fetch([3465],['BODY[]','FLAGS'])
+message=pyzmail.PyzMessage.factory(rawm[3465]['BODY[]'])
+print(message.get_subject())
+print(message.get_address('to'))
+print(message.text_part!=None)
+print(message.text_part.get_payload().decode(message.text_part.charset))
+print(message.html_part!=None)
+print(message.html_part.get_payload().decode(message.html_part.charset))
